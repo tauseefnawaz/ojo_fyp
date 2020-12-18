@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+
+
+    <title>Hello, world!</title>
+
+<style>
+     body{
+         background-image : url("{{  url_for('static',filename='images/3737302.png') }}");
+           background-size: cover;
+          background-repeat: no-repeat;
+
+          }
+     .container{
+
+
+         width:383px;
+         height:342px;
+         background-color:#052240;
+         margin-top:20px;
+         opacity: 90%;
+
+     }
+     .chead{
+
+         width:383px;
+         height:110px;
+         background-color:#052240;
+         margin-top:100px;
+         opacity: 90%;
+         text-align:center;
+     }
+     .logo{
+         margin-top:10px ;
+     }
+     input{
+
+         text-align: center;
+     }
+     .form-signin h2{
+         color:white;
+         padding-top: 50px;
+         padding-bottom: 20px;
+
+     }
+     .btnSub{
+         background-color:#68FE86;
+         color:#052240;
+           font-size:17px;
+         font-weight: bold;
+         width:100px;
+     }
+     #inputEmail{
+
+         width:200px;
+     }
+     #inputPassword{
+         width:200px;
+     }
+
+
+</style>
+
+  </head>
+  <body>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+
+
+
+    <div class="container chead">
+
+        <img class="logo" src="{{  url_for('static',filename='images/logo.png') }}" width="184" height="88">
+
+
+    </div>
+
+
+    <div class="container">
+
+
+               <form class="form-signin" method="POST">
+                   <center>
+                       <h2 style="color:white"><b>Admin Login</b></h2>
+
+                   <input type="text" id="inputEmail" name="username" class="form-control" placeholder="username" required autofocus><br>
+                   <input type="password" id="inputPassword" name="password" class="form-control" placeholder="password" required>
+                  <br>
+                   <button type="submit" class="btn btn-lg btn-primary btn-block btnSub" type="submit">Sign in</button>
+                   </center>
+               </form>
+
+
+        </div>
+
+
+  </body>
+</html>

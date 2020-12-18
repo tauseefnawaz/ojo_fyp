@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+
+
+      <style>
+
+          body{
+              color:white;
+              background-image: url("{{  url_for('static',filename='images/background1.JPG') }}") !important;
+                background-size: cover;
+          background-repeat: no-repeat;
+          }
+
+        a{
+            text-decoration: none;
+              color:white;
+
+          }
+
+        a:hover{
+             text-decoration: none;
+              color:#68FE86;
+        }
+          .navbar-right a{
+            margin-left: 30px;
+
+
+          }
+          .r1{
+              margin-top: 40px;
+          }
+          .viewCam{
+                 width:540px;
+              height:349px;
+              margin-left: auto;
+              margin-right: auto;
+              text-align: center;
+              display: table-cell;
+              vertical-align: middle ;
+
+
+              border: dashed white 1px;
+          }
+          .videoFeed1{
+
+
+          }
+
+
+      </style>
+  </head>
+  <body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">
+        <img alt="Brand" src="{{  url_for('static',filename='images/logo.png') }}" width="184" height="88">
+      </a>
+    </div>
+      <p class="navbar-text navbar-right">
+        <a href="{{  url_for('evaluate')}}" class="navbar-link">
+          <img src="{{  url_for('static',filename='images/ee.png') }}" width="34" height="34">
+              <span>Video Evaluation</span>
+
+           <a href="#" class="navbar-link">
+          <img src="{{  url_for('static',filename='images/as.png') }}" width="34" height="34">
+              <span>Detected Activity Logs</span>
+
+           </a>
+           <a href="logout" class="navbar-link">
+          <img src="{{  url_for('static',filename='images/qq.png') }}" width="34" height="34">
+
+
+          </a>
+
+
+      </p>
+
+  </div>
+</nav>
+  <div class="container">
+      <center>
+          <h3 style="color:white">
+              Staff Dashboard
+          </h3>
+          <div class="row r1">
+              <div class="col-md-6" >
+                    <!-- <a href ="video_feed"> -->
+
+        <iframe class="videoFeed1" src="video_feed" style="border:0px #ffffff none;" name="myiFrame" scrolling="no" frameborder="1" marginheight="0px" marginwidth="0px" height="100%"  width="540px" allowfullscreen></iframe>
+
+
+
+
+                     <!-- </a> -->
+              </div>
+
+               <div class="col-md-6">
+                 <!-- <a href ="video_feed"> -->
+
+                      <div class="viewCam" id="view2">
+                          <div class="AddCamOptions" id="option2Cam">
+
+
+
+                          </div>
+
+
+                      </div>
+
+
+                  <!-- </a> -->
+
+              </div>
+
+          </div>
+      </center>
+
+  </div>
+
+
+
+
+
+
+
+
+  </body>
+</html>

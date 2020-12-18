@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+
+
+      <style>
+
+          body{
+              color:white;
+              background-image: url("{{  url_for('static',filename='images/background1.JPG') }}") !important;
+                background-size: cover;
+          background-repeat: no-repeat;
+          }
+
+        a{
+            text-decoration: none;
+              color:white;
+
+          }
+
+        a:hover{
+             text-decoration: none;
+              color:#68FE86;
+        }
+          .navbar-right a{
+            margin-left: 30px;
+
+
+          }
+          .r1{
+              margin-top: 40px;
+          }
+          .viewCam{
+                 width:540px;
+              height:349px;
+              margin-left: auto;
+              margin-right: auto;
+              text-align: center;
+              display: table-cell;
+              vertical-align: middle ;
+
+
+              border: dashed white 1px;
+          }
+          .videoFeed1{
+
+
+          }
+
+          #myForm1,#myForm2{
+            height:170px;
+            width:340px;
+            margin:0 auto;
+            position:relative;
+             z-index:10;
+            display:none;
+            background: #68FE86;
+            border-radius:10px;
+
+          }
+          .cancel
+            {
+              display:block;
+              position:absolute;
+              top:3px;
+              right:2px;
+              background-color:transparent;
+              color:black !important;
+              height:30px;
+              width:35px;
+              font-size:30px;
+              text-decoration:none;
+              text-align:center;
+              font-weight:bold;
+            }
+          #cover1,#cover2{
+              position:fixed;
+              top:0;
+              left:0;
+              background:rgba(0,0,0,0.6);
+              z-index:5;
+              width:100%;
+              height:100%;
+              display:none;
+            }
+
+
+        .form-container{
+
+            width: 200px;
+            height: 300px;
+            position: relative;
+            margin: 0 auto;
+            top: 25%;
+          }
+        input{
+            padding: 4px 10px;
+            border:none;
+            border-radius:10px ;
+            text-decoration: none;
+            text-align: center;
+        }
+          input:focus{
+
+            border:none;
+
+        }
+        .btn{
+            margin-top: 10px;
+            color:white !important;
+            background-color:#052240;
+        }
+        .btnUserConfig{
+            margin-top: 10px;
+            color:#0D2139 !important;
+            background-color:#68FE86;
+            width:100px;
+            padding: 5px 0px;
+            font-size:16px;
+            border-radius: 50px !important;
+        }
+        .f1{
+            margin-bottom: 10px;
+             border-radius: 50px !important;
+        }
+
+      </style>
+  </head>
+  <body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">
+        <img alt="Brand" src="{{  url_for('static',filename='images/logo.png') }}" width="184" height="88">
+      </a>
+    </div>
+      <p class="navbar-text navbar-right">
+           <a href="{{  url_for('evaluate')}}" class="navbar-link">
+          <img src="{{  url_for('static',filename='images/ee.png') }}" width="34" height="34">
+              <span>Video Evaluation</span>
+           <a href="#" class="navbar-link" >
+          <img src="{{  url_for('static',filename='images/staffLogIcon.png') }}" width="24" height="34">
+              <span>Staff Logs</span>
+          </a>
+          <a href="#" class="navbar-link" >
+          <img src="{{  url_for('static',filename='images/admin.png') }}"  width="34" height="34">
+              <span>Add/Remove Admin</span>
+          </a>
+           <a href="#" class="navbar-link">
+          <img src="{{  url_for('static',filename='images/as.png') }}"  width="34" height="34">
+              <span>Detected Activity Logs</span>
+
+           </a>
+           <a href="logout" class="navbar-link">
+          <img src="{{  url_for('static',filename='images/qq.png') }}" width="34" height="34">
+
+
+          </a>
+
+
+      </p>
+
+  </div>
+</nav>
+  <div class="container">
+      <center>
+  <p style="color:#68FE86;display: none;font-size:20px" name="success">
+              Removed Successfully!
+
+          </p>
+
+<div class="subContainer" style="width:250px">
+          <p>
+           <form name="rem-mem-form" action="{{ url_for("remove") }}">
+            <h3 style="color:white">
+                      <b>Remove a Member</b>
+                  </h3>
+                   <center>
+
+                   <input type="text" id="email" name="email" class="form-control f1" placeholder="Email" required>
+
+                       <input type="text" id="username" name="username" class="form-control f1" placeholder="Username" required>
+
+                   <button type="submit" class="btn btn-lg btn-primary btn-block btnSub btnUserConfig" type="submit"><b>Remove</b></button>
+                         </center>
+
+               </form>
+            <a href="{{  url_for('userConfiguration')}}"><button class="btn btn-lg btn-primary btn-block btnSub btnUserConfig" ><b>Back</b></button>
+
+            </a>
+          </p>
+
+
+      </div>
+
+
+      </center>
+
+  </div>
+
+
+
+
+
+<script>
+
+
+$('form[name="rem-mem-form"]').submit(function (e){
+   var $form=$(this);
+
+
+   var $error=$form.find(".error");
+   var data=$form.serialize();
+   $.ajax({
+       url:"remove",
+       type:"POST",
+       data:data,
+
+
+       success:function (resp){
+           var c=$('p[name="success"]');
+           c.css("display","block");
+
+           var f=$('form[name="rem-mem-form"]');
+           f.css("display","none");
+
+
+           console.log(resp);
+       },
+       error:function(resp){
+           var c=$('p[name="success"]');
+           c.css("display","block");
+           c.text("Error");
+           c.css("color","red");
+           console.log(resp);
+       }
+
+   });
+
+
+e.preventDefault();
+
+
+});
+</script>
+
+
+
+
+  </body>
+</html>
