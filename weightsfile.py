@@ -1,8 +1,8 @@
 import gdown
 import os
 #download classes
-os.system("gdown --id 1-BuEDvOuYDcRNmh_35uMUjA8Cfe0THkE")
+os.system("gdown --id 15LvQlqy-1HvWq4aeK-gnCF2hEPyqSepa")
 #downlaod cfg file
-os.system("gdown --id 1-3-YwP2ink_i_Z5i6XXvHDb9ZTQAsAA5")
+os.system("gdown --id 15Kg_9QgkjHRSUR5BD5WCqMHPLOXl3TA-")
 #download weights
-os.system("gdown --id 1Bj3BwW5V6F3M0E_lkX-i_p6X3JtX6eJw")
+os.system("gdown --id 1-DtfPxV3QfEzd7o_AJghfnbvUNo5zxuC")
