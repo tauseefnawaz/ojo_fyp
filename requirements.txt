@@ -1,0 +1,10 @@
+Flask==1.1.2 
+numpy>=1.9.2
+opencv-python==4.4.0.44
+imutils
+gdown
+pymongo
+Flask-Cors
+python-dotenv
+twilio
+moviepy

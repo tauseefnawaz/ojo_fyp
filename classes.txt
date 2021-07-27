@@ -1,0 +1,4 @@
+Handgun
+Knife
+Rifle
+Human_face

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    OJO - Smart Surveillance Detection System
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- CSS Files -->
+   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/material-dashboard.css') }}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <script src="{{ url_for('static',filename='scripts/jquery.table2excel.js') }}"></script>
+    <script src="{{ url_for('static',filename='scripts/tableHTMLExport.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.0.10/jspdf.plugin.autotable.min.js"></script>
+    <style>
+
+        body{
+
+            background: linear-gradient(129deg ,rgba(255,255,255,.85),rgba(255,255,255,.85)),url("{{  url_for('static',filename='images/camback1.JPG') }}") 50% 50% no-repeat;
+
+          background-size: cover;
+
+        }
+        .sidebar[data-color="purple"] li.active>a {
+
+    	background: -webkit-linear-gradient(to right, #bf3a65, #9c1073);
+	background: linear-gradient(to right, #bf3a65, #9c1073);}
+
+        .r1{
+              margin-top: 40px;
+          }
+          .viewCam{
+                 width:540px;
+              height:349px;
+              margin-left: auto;
+              margin-right: auto;
+              text-align: center;
+              display: table-cell;
+              vertical-align: middle ;
+
+
+              border: dashed black 1px !important;
+          }
+          .videoFeed1{
+
+
+          }
+
+          #myForm1,#myForm2{
+            height:170px;
+            width:340px;
+            margin:0 auto;
+            position:relative;
+             z-index:10;
+            display:none;
+            background: black;
+            border-radius:10px;
+
+          }
+          .cancel
+            {
+              display:block;
+              position:absolute;
+              top:3px;
+              right:2px;
+              background-color:transparent;
+              color:white !important;
+              height:30px;
+              width:35px;
+              font-size:30px;
+              text-decoration:none !important;
+              text-align:center;
+              font-weight:bold;
+            }
+          .cancel a
+            {
+
+              text-decoration:none !important;
+
+            }
+          #cover1,#cover2{
+              position:fixed;
+              top:0;
+              left:0;
+              background:rgba(0,0,0,0.6);
+              z-index:5;
+              width:100%;
+              height:100%;
+              display:none;
+            }
+
+
+        .form-container{
+
+            width: 200px;
+            height: 300px;
+            position: relative;
+            margin: 0 auto;
+            top: 25%;
+          }
+        input{
+            padding: 4px 10px;
+            border:none;
+            border-radius:10px ;
+            text-decoration: none;
+            text-align: center;
+        }
+          input:focus{
+
+            border:none;
+
+        }
+        .btn{
+            margin-top: 10px;
+            color:white !important;
+            background-color:#052240;
+        }
+        .dropWrap{
+
+            margin-bottom: 20px;
+        }
+        .dropbtn {
+
+          background-color: transparent;
+          color: black;
+          padding-left: 10px;
+          padding-right: 10px;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          font-size: 16px;
+            border:none;
+
+        }
+
+        .dropdown {
+
+          position: relative;
+          display: inline-block;
+        }
+
+        .dropdown-content {
+              margin-left:5px !important;
+          display: none;
+          position: absolute;
+          background-color: #f1f1f1;
+          min-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+        }
+
+        .dropdown-content a {
+          color: black;
+          padding: 4px 16px;
+          text-decoration: none;
+          display: block;
+
+        }
+
+        .dropdown-content a:hover {color:white;background-color: black;}
+
+        .dropdown:hover .dropdown-content {display: block;}
+
+        .dropdown:hover .dropbtn {font-weight:bold;border:none;}
+
+        .reBtn{
+            color:white;
+            background-color:red !important;
+        }
+
+        .btn.btn-primary .btnSub{
+            background-color: transparent !important;
+            border: 5px solid black !important;
+            color: black !important;
+
+        }
+        .btn.btn-primary:hover{
+            background-color: black;
+        }
+        #remBtnId{
+            margin-bottom: 0px !important;
+        }
+        #logheader{
+
+            background: -webkit-linear-gradient(to right, #bf3a65, #9c1073);
+            background: linear-gradient(to right, #bf3a65, #9c1073);
+        }
+    </style>
+
+
+</head>
+
+<div class="wrapper ">
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+        <div class="logo" ><img style="margin-left: 40px" alt="Brand" src="{{  url_for('static',filename='images/logo-1.png') }}" width="184" height="88"></div>
+        <div class="sidebar-wrapper">
+            <ul class="nav">
+                <li class="nav-item" >
+                    <a class="nav-link" href="/">
+                        <i class="material-icons">dashboard</i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{  url_for('evaluate')}}">
+                        <img src="{{  url_for('static',filename='images/ee11.png') }}" width="24" height="24">
+                        <span style="margin-left: 20px">Video Evaluation</span>
+                    </a>
+                </li>
+                {% if user['role']=="manager" %}
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{{  url_for('staffLogs')}}">
+                            <i class="material-icons">content_paste</i>
+                            <p>Staff Logs</p>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{{  url_for('userConfiguration')}}">
+                            <i class="material-icons">library_books</i>
+                            <p>Add/Remove Admin</p>
+                        </a>
+                    </li>
+                {% endif %}
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{  url_for('log')}}">
+                        <i class="material-icons">bubble_chart</i>
+                        <p>Detected Activity Logs</p>
+                    </a>
+                </li>
+
+
+
+            </ul>
+        </div>
+    </div>
+    <div class="main-panel">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+            <div class="container-fluid">
+                <div class="navbar-wrapper">
+                    <a class="navbar-brand" href="javascript:;">Detected Activity Logs</a>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="navbar-toggler-icon icon-bar"></span>
+                    <span class="navbar-toggler-icon icon-bar"></span>
+                    <span class="navbar-toggler-icon icon-bar"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end">
+                    <ul class="navbar-nav">
+
+
+                        <li class="nav-item dropdown">
+                            <div class="dropWrap">
+                                <div class="dropdown">
+                                    <button class="dropbtn"><span style="padding-right: 10px"><img src="{{  url_for('static',filename='images/prof.png') }}" width="34" height="34"></span>{{ user['name'] }}</button>
+                                    <div class="dropdown-content">
+                                        <a href="updateDetails">
+                                            <img src="{{  url_for('static',filename='images/updateicon.png') }}" width="14" height="14">
+                                            Update Info</a>
+                                        <a href="logout">
+                                            <img src="{{  url_for('static',filename='images/qq.png') }}" width="14" height="14">
+                                            <span>Sign out</span>
+
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- End Navbar -->
+
+
+
+        <div class="content">
+            <center>
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card" >
+                                    <div class="card-header card-header-primary" id="logheader" ">
+                                    <h4 class="card-title " >Detected Activity Logs</h4>
+                                    <p class="card-category">The time and date of each detected activity.</p>
+                                </div>
+                                <div class="card-body">
+                                <span><button class="btn-primary" id="csvButton">CSV</button> <button class="btn-primary" id="pdfButton">PDF</button> <button class="btn-primary" id="jsonButton">JSON</button></span>
+                                    <div class="table-responsive">
+                                        <table id="tb1" class="table">
+                                            <thead class=" text-primary"style="color: #bf3a65">
+                                            <th style="color: #bf3a65">Date</th>
+                                            <th style="color: #bf3a65">Time</th>
+                                            <th style="color: #bf3a65" class="noExl">Detected Frame</th>
+                                            <th style="color: #bf3a65" >Detection Type</th>
+                                            <th style="color: #bf3a65" >Video Type</th>
+
+                                            </thead>
+                                            <tbody>
+                                            {% if logs=="null" or detectImageList=="null" %}
+                                                <tr></tr>
+
+                                            {% else %}
+
+                                                {% for lg,img in zip(logs,detectImageList) %}
+                                                    <tr>
+                                                        <td>{{ lg['date']}}</td>
+                                                        <td>{{ lg['time']}}</td>
+                                                        <td class="noExl"><img width="150" height="100" src={{ img }} /></td>
+                                                      <td>{{ lg['detectionType']}}</td>
+                                                        <td>{{ lg['videoType']}}</td>
+                                                    </tr>
+                                                {% endfor %}
+
+                                             {% endif %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+            </center>
+        </div>
+
+
+    </div>
+</div>
+
+ <script>
+     /*
+$("#csvButton").click(function(){
+  $("#tb1").table2excel({
+    // exclude CSS class
+    exclude: ".noExl",
+    name: "Worksheet Name",
+      exclude_img: true,
+      exclude_links: true,
+    exclude_inputs: true,
+    filename: "Detected Activity Logs", //do not include extension
+    fileext: ".csv" // file extension,
+
+
+  });
+});
+*/
+
+
+$("#csvButton").click(function(){
+
+$("#tb1").tableHTMLExport({
+
+  // csv, txt, json, pdf
+  type:'csv',
+
+  // default file name
+  filename: 'Detected Activity Logs.csv',
+
+  // for csv
+  separator: ',',
+  newline: '\r\n',
+  trimContent: true,
+  quoteFields: true,
+
+  // CSS selector(s)
+  ignoreColumns: '.noExl',
+  ignoreRows: '',
+
+  // your html table has html content?
+  htmlContent: false,
+
+  // debug
+  consoleLog: false,
+
+});
+
+});
+
+
+$("#jsonButton").click(function() {
+    $("#tb1").tableHTMLExport({
+
+        // csv, txt, json, pdf
+        type: 'json',
+        ignoreColumns: '.noExl',
+        ignoreRows: '',
+        // file name
+        filename: 'Logs.json'
+
+    });
+
+});
+
+
+
+$("#pdfButton").click(function(){
+
+$("#tb1").tableHTMLExport({
+
+      type:'pdf',
+     ignoreColumns: '.noExl',
+    filename: 'Logs.pdf',
+      orientation: 'p'
+
+    });
+
+
+});
+
+
+
+
+ </script>
+
+</body>
+</html>

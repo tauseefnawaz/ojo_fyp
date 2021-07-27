@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    OJO - Smart Surveillance Detection System
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- CSS Files -->
+   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/material-dashboard.css') }}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <style>
+
+        body{
+
+            background: linear-gradient(129deg ,rgba(255,255,255,.85),rgba(255,255,255,.85)),url("{{  url_for('static',filename='images/camback1.JPG') }}") 50% 50% no-repeat;
+
+          background-size: cover;
+
+        }
+        .sidebar[data-color="purple"] li.active>a {
+    background: -webkit-linear-gradient(to right, #bf3a65, #9c1073);
+	background: linear-gradient(to right, #bf3a65, #9c1073);}
+ a:hover{
+            text-decoration: none !important;
+
+        }
+        .r1{
+              margin-top: 40px;
+          }
+          .viewCam{
+                 width:540px;
+              height:349px;
+              margin-left: auto;
+              margin-right: auto;
+              text-align: center;
+              display: table-cell;
+              vertical-align: middle ;
+
+
+              border: dashed black 1px !important;
+          }
+          .videoFeed1{
+
+
+          }
+
+          #myForm1,#myForm2{
+            height:170px;
+            width:340px;
+            margin:0 auto;
+            position:relative;
+             z-index:10;
+            display:none;
+            background: black;
+            border-radius:10px;
+
+          }
+          .cancel
+            {
+              display:block;
+              position:absolute;
+              top:3px;
+              right:2px;
+              background-color:transparent;
+              color:white !important;
+              height:30px;
+              width:35px;
+              font-size:30px;
+              text-decoration:none !important;
+              text-align:center;
+              font-weight:bold;
+            }
+          .cancel a
+            {
+
+              text-decoration:none !important;
+
+            }
+          #cover1,#cover2{
+              position:fixed;
+              top:0;
+              left:0;
+              background:rgba(0,0,0,0.6);
+              z-index:5;
+              width:100%;
+              height:100%;
+              display:none;
+            }
+
+
+        .form-container{
+
+            width: 200px;
+            height: 300px;
+            position: relative;
+            margin: 0 auto;
+            top: 25%;
+          }
+        input{
+            padding: 4px 10px;
+            border:none;
+            border-radius:10px ;
+            text-decoration: none;
+            text-align: center;
+        }
+          input:focus{
+
+            border:none;
+
+        }
+        .btn{
+            margin-top: 10px;
+            color:white !important;
+            background-color:#052240;
+        }
+        .dropWrap{
+
+            margin-bottom: 20px;
+        }
+        .dropbtn {
+
+          background-color: transparent;
+          color: black;
+          padding-left: 10px;
+          padding-right: 10px;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          font-size: 16px;
+            border:none;
+
+        }
+
+        .dropdown {
+
+          position: relative;
+          display: inline-block;
+        }
+
+        .dropdown-content {
+              margin-left:5px !important;
+          display: none;
+          position: absolute;
+          background-color: #f1f1f1;
+          min-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+        }
+
+        .dropdown-content a {
+          color: black;
+          padding: 4px 16px;
+          text-decoration: none;
+          display: block;
+
+        }
+
+        .dropdown-content a:hover {color:white;background-color: black;}
+
+        .dropdown:hover .dropdown-content {display: block;}
+
+        .dropdown:hover .dropbtn {font-weight:bold;border:none;}
+
+        .reBtn{
+            color:white;
+            background-color:red !important;
+        }
+
+        .btn.btn-primary .btnSub{
+            background-color: transparent !important;
+            border: 5px solid black !important;
+            color: black !important;
+
+        }
+        .btn.btn-primary:hover{
+            background-color: black;
+        }
+        #remBtnId{
+            margin-bottom: 0px !important;
+        }
+    </style>
+
+
+</head>
+
+<body>
+  <div class="wrapper ">
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+      <div class="logo" ><img style="margin-left: 40px" alt="Brand" src="{{  url_for('static',filename='images/logo-1.png') }}" width="184" height="88"></div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+          <li class="nav-item active" >
+            <a class="nav-link" href="/">
+              <i class="material-icons">dashboard</i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{{  url_for('evaluate')}}">
+               <img src="{{  url_for('static',filename='images/ee11.png') }}" width="24" height="24">
+              <span style="margin-left: 20px">Video Evaluation</span>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{{  url_for('staffLogs')}}">
+              <i class="material-icons">content_paste</i>
+              <p>Staff Logs</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{{  url_for('userConfiguration')}}">
+              <i class="material-icons">library_books</i>
+              <p>Add/Remove Admin</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{{  url_for('log')}}">
+              <i class="material-icons">bubble_chart</i>
+              <p>Detected Activity Logs</p>
+            </a>
+          </li>
+
+
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <a class="navbar-brand" href="javascript:;">Dashboard</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+
+
+              <li class="nav-item dropdown">
+                 <div class="dropWrap">
+                <div class="dropdown">
+                  <button class="dropbtn"><span style="padding-right: 10px"><img src="{{  url_for('static',filename='images/prof.png') }}" width="34" height="34"></span>{{ user['name'] }}</button>
+                      <div class="dropdown-content">
+                        <a href="updateDetails">
+                            <img src="{{  url_for('static',filename='images/updateicon.png') }}" width="14" height="14">
+                            Update Info</a>
+                        <a href="logout">
+                         <img src="{{  url_for('static',filename='images/qq.png') }}" width="14" height="14">
+                            <span>Sign out</span>
+
+                          </a>
+                      </div>
+                    </div>
+                    </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+
+
+
+
+
+  <div class="content" style="margin-top: 30px">
+      <center>
+
+        <form  id="remBtnId" name="removeCamForm" style="width:200px; display: none">
+                      <button class="btn btn-md btn-primary btn-block btnSub reBtn" type="submit">Remove Camera</button>
+                    </form>
+
+   {% if cam['enabled']=="true" %}
+       <form  id="remBtnId" name="removeCamForm" style="width:200px;">
+                      <button class="btn btn-md btn-primary btn-block btnSub reBtn" type="submit">Remove Camera</button>
+                    </form>
+
+       {% endif %}
+          <div class="row r1">
+
+
+                        <div class="viewCam" >
+
+                          {% if cam['enabled']=="true" %}
+
+                                <img id= "streamid" class="videoFeed1" src="video_feed" style="border:0px #ffffff none;"
+                                 name="myiFrame" height="100%" width="100%" >
+
+                              <div id="managerCountDown"></div>
+                              </span><button class="btn btn-md btn-primary btn-block btnSub" id="informPolice" style="display:none;background: -webkit-linear-gradient(to right, #bf3a65, #9c1073);
+	                                background: linear-gradient(to right, #bf3a65, #9c1073);;opacity: 0.8">Inform Police</button><span>
+                              <p id="afterMsg" style="display: none"></p>
+                              <button class="btn btn-md btn-primary btn-block btnSub" id="ignoreAlert" style="display:none;background: -webkit-linear-gradient(to right, #bf3a65, #9c1073);
+	                                background: linear-gradient(to right, #bf3a65, #9c1073);;opacity: 0.8">Ignore Alert</button>
+                                </span>
+
+
+                              </div>
+
+                            {% else %}
+
+                               <div class="viewCam" id="view1">
+
+                               <div class="AddCamOptions" id="option1Cam">
+                               <img src="{{  url_for('static',filename='images/black.png') }}" width="209" height="159"><br>
+                                  <h5>Add Camera</h5>
+                                  </div>
+
+
+                                 <div class="form-popup" id="myForm1" style="background: -webkit-linear-gradient(to right, #bf3a65, #9c1073);
+	background: linear-gradient(to right, #bf3a65, #9c1073);;opacity: 0.8" >
+                                    <a href="dashboard" class="cancel" id="cancelButton1">×</a>
+
+                                      <form class="form-container" name="addIpForm">
+                                          <p id="feedback1" style="display:none;color:red">Invalid Value</p>
+                                        <center><input type="text" placeholder="Add Camera ID" name="ip1" id="inVal1" required ></center>
+
+                                        <button type="submit"  class="btn addIpBtn" style="background:black;" id="add1">Add</button>
+
+                                      </form>
+                                    </div>
+
+                                 </div>
+                            {% endif %}
+                     <!-- </a> -->
+          </div>
+
+
+
+  <script>
+
+$('#view1').click(function(){
+
+           $('#option1Cam').hide();
+           document.getElementById("myForm1").style.display = "block";
+
+
+        });
+
+$( '#streamid').ready(function() {
+
+        var checkingDetectionRepeat = setInterval(function() {
+     $.ajax({
+       url:"checkDetection",
+       method:"GET",
+       success:function (resp){
+           console.log(resp);
+           if (resp['detection']=="true"){
+                $('#informPolice').css('display','inline-block');
+                $('#ignoreAlert').css('display','inline-block');
+
+               clearInterval(checkingDetectionRepeat );
+                        $("#ignoreAlert").click(function(){
+                            var $this = $(this);
+                                $('#informPolice').css('display','none');
+
+                              $.ajax({
+                               url:"ignoreIt",
+                               method:"GET",
+
+                               success:function (resp){
+                                    $('#afterMsg').html("Alert has been ignored!");
+                                     $('#afterMsg').css('display',"inline-block");
+                                    location.reload();
+                                    console.log("HELLLO");
+                                    console.log(resp);
+
+                               },
+                               error:function(resp){
+
+                                    console.log(resp);
+                               }
+                               });
+
+
+                        });
+                        //
+                        $("#informPolice").click(function(){
+                            var $this = $(this);
+                            $('#ignoreAlert').css('display','none');
+
+
+
+                              $.ajax({
+                               url:"informPolice",
+                               method:"GET",
+                               success:function (resp){
+                                   $('#afterMsg').html("Notification sent to the Police");
+                                   $('#afterMsg').css('display',"inline-block");
+                                    location.reload();
+                                    console.log("HELLLO");
+                                    console.log(resp);
+
+                               },
+                               error:function(resp){
+
+                                    console.log(resp);
+                               }
+                               });
+
+                        });
+                      // Output the result in an element with id="demo"
+
+
+
+           }
+
+       },
+       error:function(resp){
+
+       }
+
+   });
+}, 1000);
+
+
+
+});
+
+
+
+
+$('form[name="addIpForm"]').submit(function (e){
+   var $form=$(this);
+
+   var name=$('input[name="ip1"]');
+   var $error=$form.find(".error");
+   var data=$form.serialize();
+
+/*
+    var buttonCheck="<button id='takeActionButton'><strong>TAKE ACTION</strong></button>";
+
+
+   while (true){
+    if ($('#view1').html()==buttonCheck){
+
+     break;
+    }
+    }
+  */
+        $('#view1').html(video);
+
+        $('#myForm1').hide();
+
+        $('#view1').css('border', 'none');
+
+
+   $.ajax({
+       url:"video_feed",
+       method:"POST",
+       data:data,
+
+       success:function (resp){
+         $('#remBtnId').css('display', 'block');
+   console.log("IP");
+
+           console.log(resp);
+           location.reload();
+       },
+       error:function(resp){
+           var errVal='<p>Invalid Value</p>';
+           $('#feedback1').html(errVal);
+
+           console.log(resp);
+       }
+
+   });
+
+
+e.preventDefault();
+
+});
+
+
+$('form[name="removeCamForm"]').submit(function (e){
+   var $form=$(this);
+   var $error=$form.find(".error");
+   var data=$form.serialize();
+
+   $.ajax({
+       url:"disableCam",
+       method:"POST",
+       data:data,
+       success:function (resp){
+            window.location.reload();
+
+           console.log(resp);
+       },
+       error:function(resp){
+           console.log(resp);
+       }
+
+   });
+
+
+e.preventDefault();
+
+});
+
+
+$('#view2').click(function(){
+
+            $('#option2Cam').hide();
+           document.getElementById("myForm2").style.display = "block";
+           document.getElementById("cover2").style.display = "block";
+
+        });
+
+function addCam2() {
+    var video = ' <img class="videoFeed1" src="video_feed" style="border:0px #ffffff none;" name="myiFrame" scrolling="no" frameborder="1" marginheight="0px" marginwidth="0px" height="100%"  width="540px" allowfullscreen></iframe>';
+    $('#option2Cam').hide();
+    $('#view2').html(video);
+    $('#view2').css('border', 'none');
+}
+
+
+var video = document.getElementById("video"); // added for clarity: this is needed
+var i = 0;
+/*
+video.addEventListener('loadeddata', function() {
+    this.currentTime = i;
+});
+
+video.addEventListener('seeked', function() {
+
+  // now video has seeked and current frames will show
+  // at the time as we expect
+  generateThumbnail(i);
+
+  // when frame is captured, increase here by 5 seconds
+  i += 5;
+
+  // if we are not past end, seek to next interval
+  if (i <= this.duration) {
+    // this will trigger another seeked event
+    this.currentTime = i;
+  }
+  else {
+    // Done!, next action
+  }
+});
+
+function generateThumbnail(i) {
+    //generate thumbnail URL data
+    var context = thecanvas.getContext('2d');
+    context.drawImage(video, 0, 0, 220, 150);
+    var dataURL = thecanvas.toDataURL();
+
+    //create img
+    var img = document.createElement('img');
+    img.setAttribute('src', dataURL);
+
+    //append img in container div
+    document.getElementById('thumbnailContainer').appendChild(img);
+}
+*/
+  </script>
+
+  </body>
+</html>
